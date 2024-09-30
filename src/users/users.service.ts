@@ -1,20 +1,20 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
 import * as bcrypt from 'bcryptjs'
+import { SignUpDto } from './dto/signup.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Users } from 'src/users/schemas/users.schemas';
+import { Model } from 'mongoose';
 import { JwtService } from '@nestjs/jwt';
-import { SignUpDto } from '../users/dto/signup.dto';
-import { Users } from '../users/schemas/users.schemas';
-import { LoginDto } from '../users/dto/login.dto';
+import { LoginDto } from './dto/login.dto';
 
 @Injectable()
-export class AuthService {
+export class UsersService {
   constructor(
     @InjectModel(Users.name)
     private userModel: Model<Users>,
     private jwtService: JwtService
   ) {}
-  async SignUp(signUpdto: SignUpDto){
+   async SignUp(signUpdto: SignUpDto){
     const { name, email, password } = signUpdto;
     const hashedPassword = await bcrypt.hash(password, 10)
 
@@ -25,9 +25,9 @@ export class AuthService {
     });
 
 
-    const token = this.jwtService.sign({user})
+    // const token = this.jwtService.sign({user})
 
-    return { token };
+    return {user };
   }
 
   async login(loginDto:LoginDto){
