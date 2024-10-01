@@ -45,4 +45,23 @@ export class UsersService {
 
     return { token };
   }
+
+
+
+  // async create(createBrandDto: CreateBrandDto) {
+  //   return await this.model.create(createBrandDto);
+  // }
+
+  async findAll() {
+    return await this.userModel.find();
+  }
+
+  async findOne(id: string) {
+    return await this.userModel.findById(id);
+  }
+
+  async remove(id: string) {
+    return await this.userModel.findByIdAndDelete;
+  }
+
 }
